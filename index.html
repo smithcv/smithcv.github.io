@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Smithcv</title>
+  <meta name="description" content="Coding projects" />
+  <style>
+    :root{
+      --bg: #0b1020; --fg:#e6e8ef; --muted:#9aa3b2; --accent:#4fd1c5; --card:#12182b;
+      --ring: 0 0 0 2px var(--accent);
+    }
+    :root.light{ --bg:#f8fafc; --fg:#0b1020; --muted:#475569; --accent:#2563eb; --card:#ffffff; }
+    html,body{height:100%}
+    body{
+      margin:0; font: 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color:var(--fg); background:radial-gradient(1200px 800px at 70% -10%, rgba(79,209,197,.15), transparent 40%), var(--bg);
+      overflow-x:hidden;
+    }
+    a{color:var(--accent); text-decoration:none}
+    header{position:sticky; top:0; backdrop-filter:saturate(180%) blur(10px); background:color-mix(in oklab, var(--bg), transparent 60%); border-bottom:1px solid color-mix(in oklab, var(--fg), transparent 92%); z-index:20}
+    .nav{max-width:1100px; margin:auto; display:flex; align-items:center; gap:16px; padding:12px 20px}
+    .nav .brand{font-weight:700; letter-spacing:.2px}
+    .nav .spacer{flex:1}
+    .btn{display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:14px; background:var(--card); border:1px solid color-mix(in oklab, var(--fg), transparent 88%); color:var(--fg); cursor:pointer}
+    .btn:hover{box-shadow:var(--ring)}
+
+    .hero{position:relative; isolation:isolate}
+    canvas#bg{position:absolute; inset:0; width:100%; height:520px; display:block; z-index:-1}
+    .hero-inner{max-width:1100px; margin:0 auto; padding:80px 20px 40px}
+    .kicker{color:var(--muted); text-transform:uppercase; letter-spacing:.18em; font-size:.85rem}
+    .title{font-weight:800; font-size:clamp(2rem, 6vw, 3.4rem); line-height:1.05; margin:.3rem 0 .6rem}
+    .subtitle{color:var(--muted); max-width:60ch}
+    .cta{margin-top:22px; display:flex; gap:12px; flex-wrap:wrap}
+
+    .grid{max-width:1100px; margin:50px auto; padding:0 20px; display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:18px}
+    .card{background:var(--card); border:1px solid color-mix(in oklab, var(--fg), transparent 88%); border-radius:18px; padding:18px; transform:translateY(8px); opacity:0; transition:.6s ease; will-change:transform,opacity}
+    .card.visible{transform:translateY(0); opacity:1}
+    .card h3{margin:.2rem 0 .2rem}
+    .muted{color:var(--muted)}
+
+    .tilt{perspective:800px}
+    .tilt > .card{transform:rotateX(0) rotateY(0); transition:transform .1s ease, box-shadow .2s ease}
+
+    section{max-width:1100px; margin:70px auto; padding:0 20px}
+    .searchbar{display:flex; gap:10px; align-items:center}
+    input[type="search"]{flex:1; padding:12px 14px; border-radius:14px; border:1px solid color-mix(in oklab, var(--fg), transparent 85%); background:var(--card); color:var(--fg)}
+
+    footer{max-width:1100px; margin:80px auto 40px; padding:0 20px; color:var(--muted)}
+    .badges{display:flex; gap:10px; flex-wrap:wrap}
+    .badge{border:1px solid color-mix(in oklab, var(--fg), transparent 85%); padding:6px 10px; border-radius:999px}
+
+    @media (prefers-reduced-motion: reduce) { .card{transition:none} }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="nav">
+      <div class="brand">⚓ Smithcv</div>
+      <a href="#features">Features</a>
+      <a href="#demo">API Demo</a>
+      <a href="#faq">FAQ</a>
+      <div class="spacer"></div>
+      <button id="themeToggle" class="btn" aria-label="Toggle theme">🌗 Theme</button>
+      <a class="btn" href="https://github.com/new" target="_blank" rel="noopener">↗ Deploy</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <canvas id="bg" aria-hidden="true"></canvas>
+    <div class="hero-inner">
+      <div class="kicker">Static • Fast • Fancy</div>
+      <h1 class="title">A cool JavaScript static website ✨</h1>
+      <p class="subtitle">No backend needed. Canvas particles, scroll animations, tilt effects, theme toggle, client‑side API calls, and a searchable gallery — all GitHub Pages‑friendly.</p>
+      <div class="cta">
+        <a class="btn" href="#features">See features</a>
+        <button id="installPWA" class="btn" hidden>⬇️ Install</button>
+      </div>
+    </div>
+  </section>
+
+  <div id="features" class="grid tilt">
+    <article class="card"><h3>Canvas Stars</h3><p class="muted">Animated particle field using <code>&lt;canvas&gt;</code>.</p></article>
+    <article class="card"><h3>Theme Toggle</h3><p class="muted">Dark/light with persistent preference.</p></article>
+    <article class="card"><h3>Scroll Reveal</h3><p class="muted">IntersectionObserver for subtle entrances.</p></article>
+    <article class="card"><h3>Card Tilt</h3><p class="muted">3D parallax on hover with pointer tracking.</p></article>
+    <article class="card"><h3>API Demo</h3><p class="muted">Client-side fetch; no servers required.</p></article>
+    <article class="card"><h3>PWA Ready</h3><p class="muted">Offline cache via service worker.</p></article>
+  </div>
+
+  <section id="demo">
+    <h2>API demo (client‑side)</h2>
+    <p class="muted">Click the button to fetch a random programming joke (from <a href="https://v2.jokeapi.dev" target="_blank" rel="noopener">JokeAPI</a>).</p>
+    <p><button id="jokeBtn" class="btn">🎲 Get a joke</button></p>
+    <blockquote id="joke" class="muted">(Your joke will appear here)</blockquote>
+  </section>
+
+  <section id="gallery">
+    <h2>Searchable gallery</h2>
+    <div class="searchbar">
+      <input id="search" type="search" placeholder="Filter cards by tag (e.g., ocean, robotics, ai)" />
+      <span class="muted" id="count"></span>
+    </div>
+    <div class="grid" id="cards"></div>
+  </section>
+
+  <footer>
+    <div class="badges">
+      <span class="badge">100% static</span>
+      <span class="badge">No build needed</span>
+      <span class="badge">Works on GitHub Pages</span>
+      <span class="badge">Progressive Web App</span>
+    </div>
+    <p class="muted">© <span id="year"></span> Smithcv — Built with vanilla JS. <a href="#">Back to top ↑</a></p>
+  </footer>
+
+  <script>
+    // ——— Theme toggle ———
+    const root = document.documentElement;
+    const themeToggle = document.getElementById('themeToggle');
+    const saved = localStorage.getItem('theme');
+    if(saved === 'light') root.classList.add('light');
+    themeToggle.addEventListener('click', () => {
+      root.classList.toggle('light');
+      localStorage.setItem('theme', root.classList.contains('light') ? 'light' : 'dark');
+    });
+
+    // ——— Canvas particles (stars) ———
+    const c = document.getElementById('bg');
+    const ctx = c.getContext('2d');
+    let pixels = [], w, h, dpr = Math.min(2, window.devicePixelRatio || 1);
+    function resize(){ w = c.width = Math.floor(innerWidth * dpr); h = c.height = Math.floor(520 * dpr); c.style.height = '520px'; }
+    function spawn(){
+      pixels = Array.from({length: Math.floor((w*h)/(12000*dpr))}, () => ({
+        x: Math.random()*w,
+        y: Math.random()*h,
+        z: Math.random()*0.8+0.2,
+        vx:(Math.random()-.5)*.2, vy:(Math.random()-.5)*.2
+      }));
+    }
+    function tick(){
+      ctx.clearRect(0,0,w,h);
+      ctx.fillStyle = '#ffffff';
+      for(const p of pixels){
+        p.x += p.vx; p.y += p.vy;
+        if(p.x<0||p.x>w) p.vx*=-1; if(p.y<0||p.y>h) p.vy*=-1;
+        const r = p.z * dpr;
+        ctx.globalAlpha = 0.35 + p.z*0.65;
+        ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, Math.PI*2); ctx.fill();
+      }
+      requestAnimationFrame(tick);
+    }
+    addEventListener('resize', () => { resize(); spawn(); });
+    resize(); spawn(); tick();
+
+    // ——— Scroll reveal ———
+    const io = new IntersectionObserver(entries => {
+      for(const e of entries){ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } }
+    }, {rootMargin: '0px 0px -10% 0px'});
+    document.querySelectorAll('.card').forEach(el => io.observe(el));
+
+    // ——— Tilt effect on feature cards ———
+    const tilt = document.querySelector('.tilt');
+    tilt.addEventListener('mousemove', e => {
+      const rect = tilt.getBoundingClientRect();
+      const cx = e.clientX - rect.left, cy = e.clientY - rect.top;
+      tilt.querySelectorAll('.card').forEach(card => {
+        const r = card.getBoundingClientRect();
+        const x = (cx - (r.left - rect.left) - r.width/2) / r.width;
+        const y = (cy - (r.top - rect.top) - r.height/2) / r.height;
+        card.style.transform = `rotateX(${-y*6}deg) rotateY(${x*8}deg)`;
+        card.style.boxShadow = `0 10px 30px rgba(0,0,0,${0.2 + Math.abs(x*y)*0.2})`;
+      });
+    });
+    tilt.addEventListener('mouseleave', () => {
+      tilt.querySelectorAll('.card').forEach(card => {
+        card.style.transform = 'rotateX(0) rotateY(0)'; card.style.boxShadow = '';
+      });
+    });
+
+    // ——— API demo ———
+    const jokeBtn = document.getElementById('jokeBtn');
+    const jokeEl = document.getElementById('joke');
+    jokeBtn.addEventListener('click', async () => {
+      jokeEl.textContent = 'Loading…';
+      try{
+        const r = await fetch('https://v2.jokeapi.dev/joke/Programming?blacklistFlags=nsfw,religious,political,sexist,explicit');
+        const j = await r.json();
+        jokeEl.textContent = j.type === 'single' ? j.joke : `${j.setup} — ${j.delivery}`;
+      }catch(err){ jokeEl.textContent = 'Could not load a joke. (Check network/CORS)'; }
+    });
+
+    // ——— Searchable gallery ———
+    const data = [
+      { title:'NEPTUNE AUV', tags:['ocean','robotics','auv'] },
+      { title:'Bathymetry Map', tags:['mapping','gis','ocean'] },
+      { title:'Telemetry Dashboard', tags:['ui','charts','ai'] },
+      { title:'Hull CFD', tags:['simulation','fluid','robotics'] },
+      { title:'Docking Station', tags:['hardware','auv'] },
+      { title:'Mission Planner', tags:['ui','planning','robotics'] },
+    ];
+    const cardsEl = document.getElementById('cards');
+    const countEl = document.getElementById('count');
+    const search = document.getElementById('search');
+    function render(filter=''){
+      const q = filter.trim().toLowerCase();
+      const items = data.filter(x => !q || x.tags.some(t => t.includes(q)) || x.title.toLowerCase().includes(q));
+      cardsEl.innerHTML = items.map(x => `<article class="card visible"><h3>${x.title}</h3><p class="muted">Tags: ${x.tags.join(', ')}</p></article>`).join('');
+      countEl.textContent = `${items.length}/${data.length}`;
+    }
+    render();
+    search.addEventListener('input', e => render(e.target.value));
+
+    // ——— PWA bits ———
+    const year = document.getElementById('year'); year.textContent = new Date().getFullYear();
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; document.getElementById('installPWA').hidden = false; });
+    document.getElementById('installPWA').addEventListener('click', async () => { deferredPrompt?.prompt(); deferredPrompt = null; });
+
+    if('serviceWorker' in navigator){ navigator.serviceWorker.register('./sw.js').catch(()=>{}); }
+  </script>
+
+  <!-- Minimal service worker for offline caching (create sw.js in the same folder) -->
+  <script type="module">
+    // If sw.js doesn't exist yet, dynamically create it on first run (Pages will serve it as a static file once committed)
+    (async () => {
+      try{
+        const res = await fetch('./sw.js', {cache:'no-store'});
+        if(!res.ok){
+          const sw = `const CACHE='oa-cache-v1';
+self.addEventListener('install', e=>{ e.waitUntil(caches.open(CACHE).then(c=>c.addAll(['./','./index.html'])))});
+self.addEventListener('fetch', e=>{ e.respondWith(caches.match(e.request).then(r=> r || fetch(e.request))) });`;
+          const blob = new Blob([sw], {type:'text/javascript'});
+          const url = URL.createObjectURL(blob);
+          // No filesystem write available here; this is just for local preview if running from a file server.
+        }
+      }catch{}
+    })();
+  </script>
+</body>
+</html>
