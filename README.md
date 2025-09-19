@@ -1,1 +1,1 @@
-# smithcv.github.io
+# Smithcv
